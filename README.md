@@ -7,11 +7,11 @@ June 26, 2023  4h
 
 Congratulations!\
 This is the 26th day for leetcode python study. Today we will learn about the Greedy Algorithm!\
-The challenges today are about ~~need to delete later~~.
+The challenges today are about using local optimums to get the global optimum.
 
 
 ## Theory
-The greedy theory has no law. Later we will learn its difference with dynamic programming。
+The greedy theory has no law. Later we will learn its difference with dynamic programming.
 
 
 ## 455.Assign Cookies
@@ -35,7 +35,7 @@ class Solution:
 
 ## 376.Wiggle Subsequence
 Keep the peaks and remove the numbers on the slope. The solution will only record the peak ups and downs, and emit those on the slope.\
-There are two special conditions here, one is the steady slope, we include this situation by prediff>=0 and curdiff<0 or prediff<=0 and curdiff>0. \
+There are two special conditions here, one is the steady slope. We include this situation by prediff>=0 and curdiff<0 or prediff<=0 and curdiff>0. \
 The other special situation is that the array only has 2 numbers and the result should be 2. We could add a dummy head with number same as the first number, and set the result default start from 1, and for loop end until the second last number.\
 When there is a wiggle, we update the prediff with the current diff value. If no wiggle, the prediff remains the same.
 ```python
@@ -58,4 +58,18 @@ class Solution:
 
 
 ## 53.Maximum Subarray
-最大子序和  
+This question can also be solved by dynamic programming.\
+Here we use greedy algorithms. If the current sum of the first few numbers is less than 0, we would rather emit those numbers and start from the next number that's larger than 0.
+```python
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        result = float('-inf')
+        count = 0
+        for i in range(len(nums)):
+            count += nums[i]
+            if count > result:
+                result = count   #record the largest sum
+            if count <= 0:
+                count = 0       #let go of the past items and start from a new number
+        return result
+```
